@@ -242,4 +242,25 @@ document.addEventListener('DOMContentLoaded', () => {
       closeQuoteModal();
     });
   }
+
+  // ==========================================================================
+  // SPA Routing Initialization
+  // ==========================================================================
+  const currentPath = window.location.pathname;
+  
+  if (currentPath && currentPath !== '/' && currentPath !== '/index.html') {
+    // Normalize path to find the matching link (e.g., 'about-us')
+    const route = currentPath.replace(/^\/|\/$/g, '');
+    
+    if (route) {
+      // Small timeout allows any internal Framer JS to initialize click handlers first
+      setTimeout(() => {
+        // Find link with href ending in the route, such as "./about-us" or "/about-us"
+        const targetLink = document.querySelector(`a[href$="${route}"], a[href$="/${route}"]`);
+        if (targetLink) {
+          targetLink.click();
+        }
+      }, 100);
+    }
+  }
 });
